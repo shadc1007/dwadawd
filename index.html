@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>to my babi</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        animation: changeBackgroundColor 5s linear infinite;
+      }
+
+      @keyframes changeBackgroundColor {
+        0% {
+          background-color: #f0f0f0; /* Initial color */
+        }
+        20% {
+          background-color: #cc99ff; /* Purple color 1 */
+        }
+        40% {
+          background-color: #9966cc; /* Purple color 2 */
+        }
+        60% {
+          background-color: #663399; /* Purple color 3 */
+        }
+        80% {
+          background-color: #330066; /* Purple color 4 */
+        }
+        100% {
+          background-color: #cc99ff; /* Back to the first color */
+        }
+      }
+
+      h1 {
+        font-size: 24px; /* Reduce font size for smaller screens */
+        color: #000;
+        display: inline-block;
+        padding: 5px; /* Reduce padding for smaller screens */
+        border-radius: 5px;
+        animation: rainbow 5s linear infinite;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid transparent;
+        margin: 0 auto;
+      }
+
+      @keyframes rainbow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      #kitten-container {
+        position: relative;
+      }
+
+      .falling-kitten {
+        position: absolute;
+        animation: fall 4s linear infinite;
+        border-radius: 50%; /* Make images circular */
+        opacity: 0.7; /* Set opacity to 70% (adjust as needed) */
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      @media (max-width: 428px) {
+        h1 {
+          font-size: 20px; /* Further reduce font size for smaller screens */
+          padding: 3px; /* Reduce padding for smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="apology"></h1>
+    <div id="kitten-container"></div>
+    <script>
+      const apologyText = "hello, babi. im sowwyy 😢i love youu";
+      const textElement = document.getElementById("apology");
+      const kittenImages = [
+        "https://placekitten.com/200/200",
+        "https://placekitten.com/201/201",
+        "https://placekitten.com/202/202",
+        "https://placekitten.com/203/203",
+        "https://placekitten.com/204/204",
+        "https://placekitten.com/205/205",
+        "https://placekitten.com/206/206",
+        "https://placekitten.com/207/207",
+        "https://placekitten.com/208/208",
+        "https://placekitten.com/209/209",
+      ];
+
+      let textIndex = 0;
+
+      function getRandomPosition() {
+        const x = Math.random() * window.innerWidth;
+        const y = -50;
+        return { x, y };
+      }
+
+      function startTextAnimation() {
+        if (textIndex >= apologyText.length) {
+          textIndex = 0;
+        }
+        textElement.innerHTML = apologyText.substr(0, textIndex + 1);
+        textIndex++;
+      }
+
+      function startAnimation() {
+        setInterval(() => {
+          startTextAnimation();
+        }, 100); // Typewriter effect speed
+
+        const kittenContainer = document.getElementById("kitten-container");
+
+        // Create and display falling kittens every 2 seconds
+        setInterval(() => {
+          const kittenImage = document.createElement("img");
+          kittenImage.src =
+            kittenImages[Math.floor(Math.random() * kittenImages.length)];
+          kittenImage.classList.add("falling-kitten");
+          const { x, y } = getRandomPosition();
+          kittenImage.style.left = `${x}px`;
+          kittenImage.style.top = `${y}px`;
+          kittenContainer.appendChild(kittenImage);
+        }, 1000); // Reduced the interval for more kittens
+      }
+
+      // Start animation immediately after the page loads
+      startAnimation();
+    </script>
+  </body>
+</html>
